@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH -N 1 --ntasks-per-node=4
+#SBATCH -N 1 --ntasks-per-node=4 -c 4
 #SBATCH -t 00:10:00
 #SBATCH -p normal_q
 
@@ -16,4 +16,4 @@ module load SciPy-bundle/2020.03-foss-2020a-Python-3.8.2
 module load PyTorch/1.4.0-foss-2020a-Python-3.8.2
 module load mpi4py/3.0.2-gompi-2020a-timed-pingpong
 
-srun --ntasks 4 python -m mpi4py distributed_experiment.py
+ mpirun -np 4 --map-by ppr:1:L3cache --bind-to l3cache -x OMP_NUM_THREADS=1 python distributed_experiment.py
