@@ -16,19 +16,12 @@ ssh  tinkercliffs1.arc.vt.edu
     a. required modules (in order, for discovery purposes)
 
     ```
-    module load foss/2020a
-    module load SciPy-bundle/2020.03-foss-2020a-Python-3.8.2
-    module load PyTorch/1.4.0-foss-2020a-Python-3.8.2
-    module load mpi4py/3.0.2-gompi-2020a-timed-pingpong
+
+    module load SciPy-bundle/2020.03-gomkl-2020a-Python-3.8.2
+    module load PyTorch/1.6.0-gomkl-2020a-Python-3.8.2
 
     ```
 
-    b. optional modules (e.g., if you want IPython)
-
-    ```
-    module load Anaconda3/2020.07
-
-    ```
 
 4. Clone and install distdl.  These notes are for using the main repository.  You may use your own fork if you like.  Use whatever directory structure you like.
     a. Clone the repo.  You may also need to setup an SSH key on GitHub.
@@ -67,7 +60,7 @@ sbatch distdl_tests.tc.sbatch
 
 ```
 git clone git@github.com:distdl/distdl-examples.git
-pip install 'torchvision==0.5.0'
+pip install torchvision
 
 ```
 
