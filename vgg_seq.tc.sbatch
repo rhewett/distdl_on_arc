@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# 1 node, 1 mpi task, 4 cores (or openMP threads) available for that task
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=16
+#SBATCH -t 01:00:00
+#SBATCH --partition=dev_q
+#SBATCH --account=tcfriendly
+
+# Remove this for less accurate timing, but also using less resources
+# This is just testing, so in general exclusive should not be set
+#SBATCH --exclusive
+
+#Change to the directory from which the job was submitted
+cd $SLURM_SUBMIT_DIR
+
+#Load modules
+module load SciPy-bundle/2020.03-gomkl-2020a-Python-3.8.2
+module load PyTorch/1.6.0-gomkl-2020a-Python-3.8.2
+
+# Run with 16 threads to compare to the OMP enabled MPI test
+# --bind-to socket is a little faster, but it doesn't seem to lock things to L3cache regions
+mpirun -np 1 --map-by ppr:1:socket --bind-to L3cache -x OMP_NUM_THREADS=16 python sequential_experiment.py
+
+# Or just run within one L3cache
+#mpirun -np 1 --map-by ppr:1:L3cache --bind-to l3cache -x OMP_NUM_THEADS=4 python sequential_experiment.py
