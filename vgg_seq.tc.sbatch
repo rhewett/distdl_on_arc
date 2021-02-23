@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=16
 #SBATCH -t 01:00:00
 #SBATCH --partition=dev_q
-#SBATCH --account=tcfriendly
+#SBATCH --account=distdl
 
 # Remove this for less accurate timing, but also using less resources
 # This is just testing, so in general exclusive should not be set
@@ -18,6 +18,7 @@ cd $SLURM_SUBMIT_DIR
 #Load modules
 module load SciPy-bundle/2020.03-gomkl-2020a-Python-3.8.2
 module load PyTorch/1.6.0-gomkl-2020a-Python-3.8.2
+module load mpi4py/3.0.2-gompi-2020a-timed-pingpong
 
 # Run with 16 threads to compare to the OMP enabled MPI test
 # --bind-to socket is a little faster, but it doesn't seem to lock things to L3cache regions

@@ -19,6 +19,7 @@ ssh  tinkercliffs1.arc.vt.edu
 
     module load SciPy-bundle/2020.03-gomkl-2020a-Python-3.8.2
     module load PyTorch/1.6.0-gomkl-2020a-Python-3.8.2
+    module load mpi4py/3.0.2-gompi-2020a-timed-pingpong
 
     ```
 
@@ -38,12 +39,12 @@ ssh  tinkercliffs1.arc.vt.edu
 
     ```
 
-5. Run the tests from an interactive session.  This gets 20 workers across two nodes using the `tcfriendly` allocation.  Load is low right now so this should be quick.  Exit when done to release the resources.
+5. Run the tests from an interactive session.  This gets 20 workers across two nodes using the `distdl` allocation.  Load is low right now so this should be quick.  Exit when done to release the resources.
 
 For numerical reasons, a test might occasionally fail.  If you get a failure, run it again to be sure it is a systemic issue.
 
 ```
-interact -N 2 --ntasks-per-node=10 -p dev_q -A tcfriendly
+interact -N 2 --ntasks-per-node=10 -p dev_q -A distdl
 srun --ntasks 20 python -m mpi4py -m pytest --with-mpi -rsa tests -x
 exit
 
